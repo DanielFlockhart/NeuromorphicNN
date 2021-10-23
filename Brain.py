@@ -62,19 +62,20 @@ class Brain():
         for node in self.nodes:
             print([node.connections[x][0].id for x in range(len(node.connections))])
 
-
     def addNode(self,type):
-        self.nodes.append(Neuron(len(self.nodes)))
+        newNode = Neuron(len(self.nodes))
+        self.nodes.append(newNode)
+        self.rewire(newNode)
 
-    def rewire(self):
-        stretch = len(self.nodes) * 2
-        while stretch > 0:
-            for node in self.nodes:
-                choice = random.choice(self.nodes)
-                # if choice is not itself, an input, already in its own connections or in the chosen nodes connectiosn then set as a connection
-                if choice not in [node.connections[x][0] for x in range(len(node.connections))] and node not in [choice.connections[x][0] for x in range(len(choice.connections))] and choice.type != "input" and choice != node:
-                    node.connections.append((choice,random.uniform(-1.0,1.0)))
-                stretch -= 1
+    def rewire(self,node):
+        for z in range(5):
+            choice = random.choice(self.nodes)
+            if choice not in [node.connections[x][0] for x in range(len(node.connections))] and node not in [choice.connections[x][0] for x in range(len(choice.connections))] and choice.type != "input" and choice != node:
+                node.connections.append((choice,random.uniform(-1.0,1.0)))
+        for z in range(5):
+            choice = random.choice(self.nodes)
+            if choice not in [node.connections[x][0] for x in range(len(node.connections))] and node not in [choice.connections[x][0] for x in range(len(choice.connections))] and choice.type != "input" and choice != node:
+                choice.connections.append((node,random.uniform(-1.0,1.0)))
 
 
             

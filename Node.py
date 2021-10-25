@@ -14,7 +14,7 @@ class Node:
         
         self.activation = 0
         self.tempState = 0
-        self.lossv
+        
         
         
         

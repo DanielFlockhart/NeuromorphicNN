@@ -97,12 +97,35 @@ class Brain():
             if choice not in [node.connections[x][0] for x in range(len(node.connections))] and node not in [choice.connections[x][0] for x in range(len(choice.connections))] and choice.type != "input" and choice != node:
                 choice.connections.append((node,random.uniform(-1.0,1.0)))
 
+    def update_weights(self):
+        for (index,node) in enumerate(self.nodes):
+            for (i,c) in enumerate(node):
+                c[0] -= node.updatev[i]
 
-            
 
-    def backProp(self,node,step,lr):
+    def getConnectBy(self,node):
+        cons = []
+        for n in self.nodes:
+            for c in n.connections:
+                if node == c[0]:
+                    cons.append(c[0])
+    def fullBackprop(self,expected):
+        pointer = 0
+        for node in self.nodes:
+            if (node.type == "output"):
+                loss = node.activation - expected[pointer]
+                self.backprop(node,5,0.01,loss)
+                pointer+=1
+        
+    def backProp(self,node,step,lr,loss):
         # Max step = how many synpases back it updates
-        for PNode in self.nodes:
-            if(node in [n[0] for n in PNodes.connection]):
-                PNode.updatev.append(())
-        pass
+        # Recurrisive is best option
+        current_loss = loss
+        cons = self.getConnectBy(node)
+        if step == 0 or len(cons) == 0 or loss <= 0:
+            return
+        for (index,c) in enumerate(cons):
+            node.updatev[index] = 0.01 * loss
+            current_loss = loss - node.updatev[index]
+            backProp(c[0],step-1,lr,current_loss)
+        return

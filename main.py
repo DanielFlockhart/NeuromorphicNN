@@ -21,6 +21,7 @@ def one_shot():
     outputs = []
     for x in range(len(inputs)):
         process(brain,inputs[x])
+        brain.backProp()
     display(brain)
 
 

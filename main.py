@@ -1,41 +1,29 @@
-import math,random,string,Brain,Visualiser
+import math,random,string,Brain
+from Visualiser import * 
 
 
-def one_shot(frames,input,target = 0.3):
+def display(brain):
+    net = NetVisuals((500,500))
+    net.build(brain.nodes)
+    net.render()
 
-    #xvals=[]
-    #yvals=[]
-    inputs = 1
-    nodes = 4
-    outputs = 1
-    loss = 0
+def process(brain,input):
+    brain.setInput(input)
+    brain.normalise()
+    return brain.getValues()
+
+
+def one_shot():
+    (inputs,nodes,outputs) = (2,4,3)
     brain = Brain.Brain(nodes,inputs,outputs)
-    inputs = [-2]#[0 for x in range(inputs)]
-    # DOING DEPTH FIRST INSTEAD OF BREADTH FIRST
-    for x in range(frames):
-        brain.setInput(inputs)
-        brain.normalise()
-        #xvals.append(inputs[0])
-        #yvals.append(brain.getValues()[0])
-        inputs = [inputs[x] + random.uniform(-0.1,0.1) for x in range(len(inputs))]
-        loss += abs((0.3 - brain.getValues()[0])/target)
-
-        #if(x % 1000 == 0):
-        #   brain.addNode("node")
-    return loss
-    #Visualiser.plotgraph(xvals,yvals)
-    #Visualiser.showgraph()
+    #inputs = [1,0.8,0.5,-0.9,1]
+    inputs = [[random.uniform(-1.0,1.0) for z in range(inputs)] for x in range(random.randint(10,100))]
+    outputs = []
+    for x in range(len(inputs)):
+        process(brain,inputs[x])
+    display(brain)
 
 
 if __name__ == "__main__":
-    frames = 100000
-    accuracy = []
-    bestAccuracy = one_shot(frames=1000,input=-2)
-    for x in range(frames):
-        loss = one_shot(frames=1000,input=-2)
-        if loss < bestAccuracy:
-            bestAccuracy = loss
-            print(bestAccuracy)
-        accuracy.append(bestAccuracy)
-    Visualiser.plotgraph([x for x in range(len(accuracy))],accuracy)
-    Visualiser.showgraph()
+
+    one_shot()

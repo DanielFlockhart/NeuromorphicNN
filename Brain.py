@@ -23,22 +23,40 @@ class Brain():
             id+=1
         
         return node_list
+
+    def setNodes(self):
+        n0 = Input(0)
+        n1 = Neuron(1)
+        n2 = Neuron(2)
+        n3 = Neuron(3)
+
+        n0.connections = [(n1,0.2)]
+        n1.connections = [(n3,-0.4),(n2,0.3)]
+        n2.connections = []
+        n3.connections = [(n2,-0.1)]
+
+        return [n0,n1,n2,n3]
+
     def setInput(self,inputs):
         inputs_nodes = [x for x in self.nodes if x.type == "input"]
         for x in range(len(inputs_nodes)):
             self.nodes[x].activation = inputs[x]
+            self.nodes[x].tempState = inputs[x]
         self.propogate()
 
     def propogate(self):
         for node in self.nodes:
             node.propogate()
-            
+
+        for node in self.nodes:
+            node.load_state()
+        
 
     def getValues(self):
         vals = []
         for node in self.nodes:
-            if node.type == "output":
-                vals.append(node.activation)
+            if (node.type == "output"):
+                vals.append(float("{:.4f}".format(node.activation)))
         return vals
 
     def normalise(self):
@@ -58,7 +76,9 @@ class Brain():
                 if choice not in [node.connections[x][0] for x in range(len(node.connections))] and node not in [choice.connections[x][0] for x in range(len(choice.connections))] and choice.type != "input" and choice != node:
                     node.connections.append((choice,random.uniform(-1.0,1.0)))
                 stretch -= 1
+
     def getConnections(self):
+        print(self.nodes)
         for node in self.nodes:
             print([node.connections[x][0].id for x in range(len(node.connections))])
 
@@ -80,5 +100,9 @@ class Brain():
 
             
 
-
-        
+    def backProp(self,node,step,lr):
+        # Max step = how many synpases back it updates
+        for PNode in self.nodes:
+            if(node in [n[0] for n in PNodes.connection]):
+                PNode.updatev.append(())
+        pass

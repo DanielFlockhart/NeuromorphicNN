@@ -11,17 +11,20 @@ def process(brain,input):
     brain.setInput(input)
     brain.normalise()
     return brain.getValues()
-
+    
+def calc_loss(results,expected):
+    return sum([abs(results[x]-expected[x]) for x in range(len(expected))])
 
 def one_shot():
-    (inputs,nodes,outputs) = (2,4,3)
-    brain = Brain.Brain(nodes,inputs,outputs)
+    (inp,nodes,out) = (1,3,1)
+    brain = Brain.Brain(nodes,inp,out)
     #inputs = [1,0.8,0.5,-0.9,1]
-    inputs = [[random.uniform(-1.0,1.0) for z in range(inputs)] for x in range(random.randint(10,100))]
-    outputs = []
+    inputs = [[1 for z in range(inp)] for x in range(100000)]
+    exp = [1 for z in range(out)]
+
     for x in range(len(inputs)):
         process(brain,inputs[x])
-        brain.backProp()
+    print(brain.getValues())
     display(brain)
 
 

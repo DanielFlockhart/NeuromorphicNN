@@ -11,7 +11,6 @@ class Node:
         self.id = id
         self.pos = self.setPos()
         self.connections = []
-        
         self.activation = 0
         self.tempState = 0
         
@@ -29,7 +28,7 @@ class Node:
         print(self.type)
 
     def propogate(self):
-        self.updatev = [0 for x in range(len(self.connections))]
+        self.updatev = [0 for x in range(100)]
         # This is does not breadfirst if multidirectional graph
         for connection in self.connections:
             connection[0].tempState += connection[1] * self.activation

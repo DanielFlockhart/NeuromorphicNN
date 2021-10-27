@@ -3,7 +3,6 @@ import random
 
 Base Class
 
-
 '''
 class Node:
     def __init__(self,id):
@@ -13,13 +12,12 @@ class Node:
         self.connections = []
         self.activation = 0
         self.tempState = 0
-        
-        
-        
+        self.pullvector = [0,0]
+
         
 
     def setPos(self):
-        return (random.uniform(0,1.0),random.uniform(0,1.0))
+        return [random.uniform(0,1.0),random.uniform(0,1.0)]
 
     def getPos(self):
         print(self.pos)
@@ -28,7 +26,6 @@ class Node:
         print(self.type)
 
     def propogate(self):
-        self.updatev = [0 for x in range(100)]
         # This is does not breadfirst if multidirectional graph
         for connection in self.connections:
             connection[0].tempState += connection[1] * self.activation
@@ -83,6 +80,8 @@ class Neuron(Node):
     def __init__(self,id):
         super().__init__(id)
         self.type = "node"
+        self.bias = random.uniform(-1.0,1.0)
+        
     
     def act(self):
         print("Neuron Action")

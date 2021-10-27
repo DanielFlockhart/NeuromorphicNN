@@ -11,7 +11,7 @@ class NetVisuals:
     def __init__(self,screensize):
         self.root = tk.Tk()
         (self.width,self.height) = screensize
-        self.canvas = tk.Canvas(self.root,width=self.width, height=self.height)
+        self.canvas = tk.Canvas(self.root,width=1000, height=1000)
         self.canvas.pack()
 
     def create_circle(self,x, y, r,type):
@@ -33,6 +33,6 @@ class NetVisuals:
             for connection in node.connections:
                 self.create_line(self.convert_pos(node.pos),self.convert_pos(connection[0].pos),connection[1])
     def convert_pos(self,pos):
-        return (pos[0] * self.width,pos[1] * self.height)
+        return (pos[0]* self.width,pos[1] * self.height)
     def render(self):
         self.root.mainloop()

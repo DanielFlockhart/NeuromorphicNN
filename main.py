@@ -30,7 +30,11 @@ def decode(output):
         part = output[x*26:x * 26 + 25]
         # causing the issue
         max_val = max(part)
-        max_index = part.index(max_val)
+        potential = [x if part[x] == max_val else 1000 for x in range(len(part))]
+        max_index = 1000
+        while max_index == 1000:
+            max_index = random.choice(potential)
+        
         #
         prompt[x] = alpha[max_index]
     return "".join(prompt)
@@ -40,14 +44,14 @@ def one_shot():
     brain = Brain.Brain(nodes,inp,out)
     #inputs = [1,0.8,0.5,-0.9,1]
     prompt = "lmaooooooo"
-    for x in range(1000):
+    for x in range(10000):
         inp = encode(prompt)
         #print(inp)
         process(brain,inp)
         outputs = brain.getValues()
-        print(outputs)
+        #print(outputs)
         prompt = decode(outputs)[-max(len(encode(prompt)),10):]
-        #print(prompt)
+        print(prompt)
         #display(brain)
         brain.learn(10,80,10)
         if(prompt == "danksmemes"):

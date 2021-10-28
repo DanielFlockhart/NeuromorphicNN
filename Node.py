@@ -4,6 +4,7 @@ import random
 Base Class
 
 '''
+range = 0.1
 class Node:
     def __init__(self,id):
         self.type = ""
@@ -76,11 +77,12 @@ Neuron
 
 '''
 
+
 class Neuron(Node):
     def __init__(self,id):
         super().__init__(id)
         self.type = "node"
-        self.bias = random.uniform(-1.0,1.0)
+        self.bias = random.uniform(-range,range)
         
     
     def act(self):

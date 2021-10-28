@@ -2,7 +2,7 @@
 
 import math
 from Node import *
-
+range = 0.1
 class Brain():
     def __init__(self,nodes,inputs,outputs):
         self.nodes = self.build_nodes(nodes,inputs,outputs)
@@ -11,6 +11,7 @@ class Brain():
     def build_nodes(self,nodes,inputs,outputs):
         node_list = []
         id = 0
+        print(inputs)
         for x in range(inputs):
             node_list.append(Input(id))
             id+=1
@@ -92,7 +93,7 @@ class Brain():
 
     def addConnection(self,origin,destination):
         if origin not in [destination.connections[x][0] for x in range(len(destination.connections))] and destination not in [origin.connections[x][0] for x in range(len(origin.connections))] and origin != destination:
-            origin.connections.append([destination,random.uniform(-1.0,1.0)])
+            origin.connections.append([destination,random.uniform(-range,range)])
             return destination
         return origin
 

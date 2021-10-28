@@ -1,5 +1,6 @@
 import math,random,string,Brain,time
 from Visualiser import * 
+from Controller import *
 
 
 def display(brain):
@@ -14,7 +15,7 @@ def process(brain,input):
 
 def calc_loss(results,expected):
     return sum([abs(results[x]-expected[x]) for x in range(len(expected))])
-def encode(prompt):
+def encode_alpha(prompt):
     alpha =list(string.ascii_lowercase)
     res = [0 for x in range(10*26)]
     for x in range(len(prompt)):
@@ -22,7 +23,7 @@ def encode(prompt):
             res[x * 26 + z] = 1 if alpha.index(prompt[x]) == z else 0 
     return res
 
-def decode(output):
+def decode_alpha(output):
     alpha =list(string.ascii_lowercase)
     
     prompt =["" for x in range(10)]
@@ -39,35 +40,43 @@ def decode(output):
         prompt[x] = alpha[max_index]
     return "".join(prompt)
 
+def reverse_expand(x):
+    return (x + 1) / 2
+def convert(x,y):
+    x = reverse_expand(x)
+    y = reverse_expand(y)
+    print(x)
+    print(y)
+    return (x * 2560,y * 1440)
+
+
 def one_shot():
-    (inp,nodes,out) = (26 * 10,2,26 * 10)
+    (inp,nodes,out) = (3,2,3)
     brain = Brain.Brain(nodes,inp,out)
     #inputs = [1,0.8,0.5,-0.9,1]
-    prompt = "lmaooooooo"
+    #prompt = "lmaooooooo"
+    outputs = [1,1,1]
     for x in range(10000):
-        inp = encode(prompt)
+        input = [outputs[0],outputs[1],outputs[2]]
         #print(inp)
-        process(brain,inp)
+        process(brain,input)
         outputs = brain.getValues()
+        res = convert(outputs[1],outputs[2])
+        if(outputs[0] > 0):
+            #click(res[0],res[1])
+            print(res)
         #print(outputs)
-        prompt = decode(outputs)[-max(len(encode(prompt)),10):]
-        print(prompt)
+        #prompt = decode(outputs)[-max(len(encode(prompt)),10):]
+        #print(prompt)
         #display(brain)
         brain.gate()
         brain.learn(10,80,10)
-        if(prompt == "danksmemes"):
-            print("found solution")
-            localtime = time.asctime( time.localtime(time.time()) )
-            print("Local current time :", localtime)
-            return 100
-    print("end of net")
     
 
         
 
 
 if __name__ == "__main__":
-    res = 0
-    while res != 100:
-        res = one_shot()
+    time.sleep(3)
+    one_shot()
         

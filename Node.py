@@ -4,7 +4,7 @@ import random
 Base Class
 
 '''
-lim = 0.1
+lim = 1
 class Node:
     def __init__(self,id):
         self.type = ""
@@ -46,7 +46,7 @@ class Output(Node):
     def __init__(self,id):
         super().__init__(id)
         self.type = "output"
-        self.bias = random.uniform(-0.1,0.1)
+        self.bias = random.uniform(-lim,lim)
         
     
     def act(self):

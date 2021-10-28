@@ -1,6 +1,6 @@
 import pyautogui
 
-
+pyautogui.FAILSAFE = False
 def get_mouse_pos():
     return pyautogui.position()
 

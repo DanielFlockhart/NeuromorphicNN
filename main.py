@@ -51,20 +51,19 @@ def convert(x,y):
 
 
 def one_shot():
-    (inp,nodes,out) = (3,2,3)
+    (inp,nodes,out) = (3,20,3)
     brain = Brain.Brain(nodes,inp,out)
     #inputs = [1,0.8,0.5,-0.9,1]
     #prompt = "lmaooooooo"
     outputs = [1,1,1]
     for x in range(10000):
-        input = [outputs[0],outputs[1],outputs[2]]
+        ins = [outputs[0],outputs[1],outputs[2]]
         #print(inp)
-        process(brain,input)
+        process(brain,ins)
         outputs = brain.getValues()
         res = convert(outputs[1],outputs[2])
         if(outputs[0] > 0):
-            #click(res[0],res[1])
-            print(res)
+            click(res[0],res[1])
         #print(outputs)
         #prompt = decode(outputs)[-max(len(encode(prompt)),10):]
         #print(prompt)

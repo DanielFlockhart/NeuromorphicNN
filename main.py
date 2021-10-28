@@ -53,6 +53,7 @@ def one_shot():
         prompt = decode(outputs)[-max(len(encode(prompt)),10):]
         print(prompt)
         #display(brain)
+        brain.gate()
         brain.learn(10,80,10)
         if(prompt == "danksmemes"):
             print("found solution")

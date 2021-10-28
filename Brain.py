@@ -73,8 +73,6 @@ class Brain():
             if node.activation < -1:
                 node.activation = -1
 
-    
-        
     def setConnections(self,density):
         for node in self.nodes:
             choice = node
@@ -115,7 +113,11 @@ class Brain():
 
             if random.randint(0,100) < cr:
                 self.addConnection(random.choice(self.nodes),random.choice(self.nodes))
-
+    def gate(self):
+        for node in self.nodes:
+            if((node.activation or node.tempState)== (1 or -1)):
+                node.activation = 0
+                node.tempState = 0
     # Distance backprop
     '''
 

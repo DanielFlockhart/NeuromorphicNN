@@ -5,7 +5,6 @@ from Node import *
 lim = 0.1
 class Brain():
     def __init__(self,nodes,inputs,outputs):
-        print(nodes,inputs,outputs)
         self.nodes = self.build_nodes(nodes,inputs,outputs)
         self.setConnections(1)
 
@@ -82,9 +81,10 @@ class Brain():
                 choice = self.addConnection(node,choice)
 
     def getConnections(self):
-        print(self.nodes)
+        total = 0
         for node in self.nodes:
-            print([node.connections[x][0].id for x in range(len(node.connections))])
+            total += len([node.connections[x][0].id for x in range(len(node.connections))])
+        return total
 
     def addNode(self,type):
         newNode = Neuron(len(self.nodes))
@@ -120,6 +120,11 @@ class Brain():
                 node.activation = 0
                 node.tempState = 0
     # Distance backprop
+
+    def sleep_nodes(self):
+        for node in self.nodes:
+            node.activation = 0
+            node.tempState = 0
     '''
 
     def getWeight(self,n1,n2):

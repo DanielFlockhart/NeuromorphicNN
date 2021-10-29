@@ -1,4 +1,4 @@
-import pyautogui
+import pyautogui,string
 
 pyautogui.FAILSAFE = False
 def get_mouse_pos():
@@ -9,5 +9,5 @@ def click(x,y):
     pyautogui.moveTo(x, y)
     pyautogui.click()
 
-def press_key(key='space'):
-    pyautogui.press(key)
+def press_key(key):
+    pyautogui.press(string.ascii_lowercase[key])

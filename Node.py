@@ -4,7 +4,7 @@ import random
 Base Class
 
 '''
-lim = 1
+lim = 0.2
 class Node:
     def __init__(self,id):
         self.type = ""

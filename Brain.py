@@ -4,9 +4,9 @@ import math
 from Node import *
 lim = 0.1
 class Brain():
-    def __init__(self,nodes,inputs,outputs):
+    def __init__(self,inputs,nodes,outputs):
         self.nodes = self.build_nodes(nodes,inputs,outputs)
-        self.setConnections(1)
+        self.setConnections(10)
 
     def build_nodes(self,nodes,input,outputs):
         node_list = []
@@ -75,10 +75,11 @@ class Brain():
 
     def setConnections(self,density):
         for node in self.nodes:
-            choice = node
-            while choice == node:
-                choice = random.choice(self.nodes)
-                choice = self.addConnection(node,choice)
+            for x in range(density):
+                choice = node
+                while choice == node:
+                    choice = random.choice(self.nodes)
+                    choice = self.addConnection(node,choice)
 
     def getConnections(self):
         total = 0
